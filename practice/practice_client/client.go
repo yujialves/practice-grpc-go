@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"io"
 	"log"
 
 	"../practicepb"
@@ -20,7 +21,8 @@ func main() {
 
 	client := practicepb.NewPracticeServiceClient(cc)
 	// fmt.Printf("Created client: %f", client)
-	doUnary(client)
+	// doUnary(client)
+	doServerStreaming(client)
 }
 
 func doUnary(client practicepb.PracticeServiceClient) {
@@ -36,4 +38,29 @@ func doUnary(client practicepb.PracticeServiceClient) {
 		log.Fatalf("error while calling Practice RPC: %v", err)
 	}
 	log.Printf("Response from Practice: %v", res.Result)
+}
+
+func doServerStreaming(client practicepb.PracticeServiceClient) {
+	fmt.Println("Starting to do a Server Streaming RPC...")
+
+	req := &practicepb.PracticeManyTimesRequest{
+		Practicing: &practicepb.Practicing{
+			FirstState:  "Hello",
+			SecondState: "World",
+		},
+	}
+	resStream, err := client.PracticeManyTimes(context.Background(), req)
+	if err != nil {
+		log.Fatalf("error while calling PracticeManyTimes RPC: %v", err)
+	}
+	for {
+		msg, err := resStream.Recv()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Fatalf("error while reading stream: %v", err)
+		}
+		log.Printf("Response from PracticeManyTimes: %v", msg.GetResult())
+	}
 }
