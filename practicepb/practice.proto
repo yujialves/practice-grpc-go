@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+package practice;
+option go_package="practicepb";
+
+service PracticeService{}
