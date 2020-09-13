@@ -1,7 +1,7 @@
 syntax = "proto3";
 
-package sum;
-option go_package="sumpb";
+package calculator;
+option go_package="calculatorpb";
 
 message SumData {
     int64 first_number = 1;
@@ -16,7 +16,7 @@ message SumResponse {
     int64 result = 1;
 }
 
-service SumService{
+service CalculatorService{
     // Unary
     rpc Sum(SumRequest) returns (SumResponse) {};
 }

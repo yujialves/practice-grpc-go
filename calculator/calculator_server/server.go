@@ -5,16 +5,16 @@ import (
 	"log"
 	"net"
 
-	"../sumpb"
+	"../calculatorpb"
 	"google.golang.org/grpc"
 )
 
 type server struct{}
 
-func (*server) Sum(ctx context.Context, req *sumpb.SumRequest) (*sumpb.SumResponse, error) {
+func (*server) Sum(ctx context.Context, req *calculatorpb.SumRequest) (*calculatorpb.SumResponse, error) {
 	sumData := req.GetSumData()
 	result := sumData.GetFirstNumber() + sumData.GetSecondNumber()
-	res := &sumpb.SumResponse{
+	res := &calculatorpb.SumResponse{
 		Result: result,
 	}
 	return res, nil
@@ -27,7 +27,7 @@ func main() {
 	}
 
 	s := grpc.NewServer()
-	sumpb.RegisterSumServiceServer(s, &server{})
+	calculatorpb.RegisterCalculatorServiceServer(s, &server{})
 
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("Failed to serve: %v", err)

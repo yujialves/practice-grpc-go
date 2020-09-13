@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"../sumpb"
+	"../calculatorpb"
 	"google.golang.org/grpc"
 )
 
@@ -16,17 +16,17 @@ func main() {
 
 	defer cc.Close()
 
-	client := sumpb.NewSumServiceClient(cc)
+	client := calculatorpb.NewCalculatorServiceClient(cc)
 	doUnary(client)
 }
 
-func doUnary(client sumpb.SumServiceClient) {
+func doUnary(client calculatorpb.CalculatorServiceClient) {
 
 	var firstNumber int64 = 123
 	var secondNumber int64 = 456
 
-	req := &sumpb.SumRequest{
-		SumData: &sumpb.SumData{
+	req := &calculatorpb.SumRequest{
+		SumData: &calculatorpb.SumData{
 			FirstNumber:  firstNumber,
 			SecondNumber: secondNumber,
 		},
