@@ -272,6 +272,100 @@ func (x *PracticeManyTimesResponse) GetResult() string {
 	return ""
 }
 
+type LongPracticeRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Practicing *Practicing `protobuf:"bytes,1,opt,name=practicing,proto3" json:"practicing,omitempty"`
+}
+
+func (x *LongPracticeRequest) Reset() {
+	*x = LongPracticeRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_practice_practicepb_practice_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *LongPracticeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LongPracticeRequest) ProtoMessage() {}
+
+func (x *LongPracticeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_practice_practicepb_practice_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LongPracticeRequest.ProtoReflect.Descriptor instead.
+func (*LongPracticeRequest) Descriptor() ([]byte, []int) {
+	return file_practice_practicepb_practice_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *LongPracticeRequest) GetPracticing() *Practicing {
+	if x != nil {
+		return x.Practicing
+	}
+	return nil
+}
+
+type LongPracticeResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Result string `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
+}
+
+func (x *LongPracticeResponse) Reset() {
+	*x = LongPracticeResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_practice_practicepb_practice_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *LongPracticeResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LongPracticeResponse) ProtoMessage() {}
+
+func (x *LongPracticeResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_practice_practicepb_practice_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LongPracticeResponse.ProtoReflect.Descriptor instead.
+func (*LongPracticeResponse) Descriptor() ([]byte, []int) {
+	return file_practice_practicepb_practice_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *LongPracticeResponse) GetResult() string {
+	if x != nil {
+		return x.Result
+	}
+	return ""
+}
+
 var File_practice_practicepb_practice_proto protoreflect.FileDescriptor
 
 var file_practice_practicepb_practice_proto_rawDesc = []byte{
@@ -298,19 +392,32 @@ var file_practice_practicepb_practice_proto_rawDesc = []byte{
 	0x63, 0x74, 0x69, 0x63, 0x69, 0x6e, 0x67, 0x22, 0x33, 0x0a, 0x19, 0x50, 0x72, 0x61, 0x63, 0x74,
 	0x69, 0x63, 0x65, 0x4d, 0x61, 0x6e, 0x79, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x52, 0x65, 0x73, 0x70,
 	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x32, 0xb8, 0x01, 0x0a,
-	0x0f, 0x50, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65,
-	0x12, 0x43, 0x0a, 0x08, 0x50, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x12, 0x19, 0x2e, 0x70,
-	0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x2e, 0x50, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x65,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1a, 0x2e, 0x70, 0x72, 0x61, 0x63, 0x74, 0x69,
-	0x63, 0x65, 0x2e, 0x50, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x60, 0x0a, 0x11, 0x50, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63,
-	0x65, 0x4d, 0x61, 0x6e, 0x79, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x12, 0x22, 0x2e, 0x70, 0x72, 0x61,
-	0x63, 0x74, 0x69, 0x63, 0x65, 0x2e, 0x50, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x4d, 0x61,
-	0x6e, 0x79, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x23,
-	0x2e, 0x70, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x2e, 0x50, 0x72, 0x61, 0x63, 0x74, 0x69,
-	0x63, 0x65, 0x4d, 0x61, 0x6e, 0x79, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x22, 0x00, 0x30, 0x01, 0x42, 0x0c, 0x5a, 0x0a, 0x70, 0x72, 0x61, 0x63, 0x74,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0x4b, 0x0a, 0x13,
+	0x4c, 0x6f, 0x6e, 0x67, 0x50, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x12, 0x34, 0x0a, 0x0a, 0x70, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x69, 0x6e,
+	0x67, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x14, 0x2e, 0x70, 0x72, 0x61, 0x63, 0x74, 0x69,
+	0x63, 0x65, 0x2e, 0x50, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x69, 0x6e, 0x67, 0x52, 0x0a, 0x70,
+	0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x69, 0x6e, 0x67, 0x22, 0x2e, 0x0a, 0x14, 0x4c, 0x6f, 0x6e,
+	0x67, 0x50, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x32, 0x8b, 0x02, 0x0a, 0x0f, 0x50, 0x72,
+	0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x43, 0x0a,
+	0x08, 0x50, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x12, 0x19, 0x2e, 0x70, 0x72, 0x61, 0x63,
+	0x74, 0x69, 0x63, 0x65, 0x2e, 0x50, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x1a, 0x1a, 0x2e, 0x70, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x2e,
+	0x50, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x22, 0x00, 0x12, 0x60, 0x0a, 0x11, 0x50, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x4d, 0x61,
+	0x6e, 0x79, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x12, 0x22, 0x2e, 0x70, 0x72, 0x61, 0x63, 0x74, 0x69,
+	0x63, 0x65, 0x2e, 0x50, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x4d, 0x61, 0x6e, 0x79, 0x54,
+	0x69, 0x6d, 0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x23, 0x2e, 0x70, 0x72,
+	0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x2e, 0x50, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x4d,
+	0x61, 0x6e, 0x79, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x22, 0x00, 0x30, 0x01, 0x12, 0x51, 0x0a, 0x0c, 0x4c, 0x6f, 0x6e, 0x67, 0x50, 0x72, 0x61, 0x63,
+	0x74, 0x69, 0x63, 0x65, 0x12, 0x1d, 0x2e, 0x70, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x2e,
+	0x4c, 0x6f, 0x6e, 0x67, 0x50, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x1a, 0x1e, 0x2e, 0x70, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x2e, 0x4c,
+	0x6f, 0x6e, 0x67, 0x50, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x22, 0x00, 0x28, 0x01, 0x42, 0x0c, 0x5a, 0x0a, 0x70, 0x72, 0x61, 0x63, 0x74,
 	0x69, 0x63, 0x65, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
@@ -326,26 +433,31 @@ func file_practice_practicepb_practice_proto_rawDescGZIP() []byte {
 	return file_practice_practicepb_practice_proto_rawDescData
 }
 
-var file_practice_practicepb_practice_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_practice_practicepb_practice_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_practice_practicepb_practice_proto_goTypes = []interface{}{
 	(*Practicing)(nil),                // 0: practice.Practicing
 	(*PracticeRequest)(nil),           // 1: practice.PracticeRequest
 	(*PracticeResponse)(nil),          // 2: practice.PracticeResponse
 	(*PracticeManyTimesRequest)(nil),  // 3: practice.PracticeManyTimesRequest
 	(*PracticeManyTimesResponse)(nil), // 4: practice.PracticeManyTimesResponse
+	(*LongPracticeRequest)(nil),       // 5: practice.LongPracticeRequest
+	(*LongPracticeResponse)(nil),      // 6: practice.LongPracticeResponse
 }
 var file_practice_practicepb_practice_proto_depIdxs = []int32{
 	0, // 0: practice.PracticeRequest.practicing:type_name -> practice.Practicing
 	0, // 1: practice.PracticeManyTimesRequest.practicing:type_name -> practice.Practicing
-	1, // 2: practice.PracticeService.Practice:input_type -> practice.PracticeRequest
-	3, // 3: practice.PracticeService.PracticeManyTimes:input_type -> practice.PracticeManyTimesRequest
-	2, // 4: practice.PracticeService.Practice:output_type -> practice.PracticeResponse
-	4, // 5: practice.PracticeService.PracticeManyTimes:output_type -> practice.PracticeManyTimesResponse
-	4, // [4:6] is the sub-list for method output_type
-	2, // [2:4] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	0, // 2: practice.LongPracticeRequest.practicing:type_name -> practice.Practicing
+	1, // 3: practice.PracticeService.Practice:input_type -> practice.PracticeRequest
+	3, // 4: practice.PracticeService.PracticeManyTimes:input_type -> practice.PracticeManyTimesRequest
+	5, // 5: practice.PracticeService.LongPractice:input_type -> practice.LongPracticeRequest
+	2, // 6: practice.PracticeService.Practice:output_type -> practice.PracticeResponse
+	4, // 7: practice.PracticeService.PracticeManyTimes:output_type -> practice.PracticeManyTimesResponse
+	6, // 8: practice.PracticeService.LongPractice:output_type -> practice.LongPracticeResponse
+	6, // [6:9] is the sub-list for method output_type
+	3, // [3:6] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_practice_practicepb_practice_proto_init() }
@@ -414,6 +526,30 @@ func file_practice_practicepb_practice_proto_init() {
 				return nil
 			}
 		}
+		file_practice_practicepb_practice_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*LongPracticeRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_practice_practicepb_practice_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*LongPracticeResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -421,7 +557,7 @@ func file_practice_practicepb_practice_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_practice_practicepb_practice_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -449,8 +585,10 @@ const _ = grpc.SupportPackageIsVersion6
 type PracticeServiceClient interface {
 	// Unary
 	Practice(ctx context.Context, in *PracticeRequest, opts ...grpc.CallOption) (*PracticeResponse, error)
-	// server Streaming
+	// Server Streaming
 	PracticeManyTimes(ctx context.Context, in *PracticeManyTimesRequest, opts ...grpc.CallOption) (PracticeService_PracticeManyTimesClient, error)
+	// Client Streaming
+	LongPractice(ctx context.Context, opts ...grpc.CallOption) (PracticeService_LongPracticeClient, error)
 }
 
 type practiceServiceClient struct {
@@ -502,12 +640,48 @@ func (x *practiceServicePracticeManyTimesClient) Recv() (*PracticeManyTimesRespo
 	return m, nil
 }
 
+func (c *practiceServiceClient) LongPractice(ctx context.Context, opts ...grpc.CallOption) (PracticeService_LongPracticeClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_PracticeService_serviceDesc.Streams[1], "/practice.PracticeService/LongPractice", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &practiceServiceLongPracticeClient{stream}
+	return x, nil
+}
+
+type PracticeService_LongPracticeClient interface {
+	Send(*LongPracticeRequest) error
+	CloseAndRecv() (*LongPracticeResponse, error)
+	grpc.ClientStream
+}
+
+type practiceServiceLongPracticeClient struct {
+	grpc.ClientStream
+}
+
+func (x *practiceServiceLongPracticeClient) Send(m *LongPracticeRequest) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *practiceServiceLongPracticeClient) CloseAndRecv() (*LongPracticeResponse, error) {
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	m := new(LongPracticeResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // PracticeServiceServer is the server API for PracticeService service.
 type PracticeServiceServer interface {
 	// Unary
 	Practice(context.Context, *PracticeRequest) (*PracticeResponse, error)
-	// server Streaming
+	// Server Streaming
 	PracticeManyTimes(*PracticeManyTimesRequest, PracticeService_PracticeManyTimesServer) error
+	// Client Streaming
+	LongPractice(PracticeService_LongPracticeServer) error
 }
 
 // UnimplementedPracticeServiceServer can be embedded to have forward compatible implementations.
@@ -519,6 +693,9 @@ func (*UnimplementedPracticeServiceServer) Practice(context.Context, *PracticeRe
 }
 func (*UnimplementedPracticeServiceServer) PracticeManyTimes(*PracticeManyTimesRequest, PracticeService_PracticeManyTimesServer) error {
 	return status.Errorf(codes.Unimplemented, "method PracticeManyTimes not implemented")
+}
+func (*UnimplementedPracticeServiceServer) LongPractice(PracticeService_LongPracticeServer) error {
+	return status.Errorf(codes.Unimplemented, "method LongPractice not implemented")
 }
 
 func RegisterPracticeServiceServer(s *grpc.Server, srv PracticeServiceServer) {
@@ -564,6 +741,32 @@ func (x *practiceServicePracticeManyTimesServer) Send(m *PracticeManyTimesRespon
 	return x.ServerStream.SendMsg(m)
 }
 
+func _PracticeService_LongPractice_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(PracticeServiceServer).LongPractice(&practiceServiceLongPracticeServer{stream})
+}
+
+type PracticeService_LongPracticeServer interface {
+	SendAndClose(*LongPracticeResponse) error
+	Recv() (*LongPracticeRequest, error)
+	grpc.ServerStream
+}
+
+type practiceServiceLongPracticeServer struct {
+	grpc.ServerStream
+}
+
+func (x *practiceServiceLongPracticeServer) SendAndClose(m *LongPracticeResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *practiceServiceLongPracticeServer) Recv() (*LongPracticeRequest, error) {
+	m := new(LongPracticeRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 var _PracticeService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "practice.PracticeService",
 	HandlerType: (*PracticeServiceServer)(nil),
@@ -578,6 +781,11 @@ var _PracticeService_serviceDesc = grpc.ServiceDesc{
 			StreamName:    "PracticeManyTimes",
 			Handler:       _PracticeService_PracticeManyTimes_Handler,
 			ServerStreams: true,
+		},
+		{
+			StreamName:    "LongPractice",
+			Handler:       _PracticeService_LongPractice_Handler,
+			ClientStreams: true,
 		},
 	},
 	Metadata: "practice/practicepb/practice.proto",

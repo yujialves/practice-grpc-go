@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"time"
 
 	"../practicepb"
 	"google.golang.org/grpc"
@@ -22,7 +23,8 @@ func main() {
 	client := practicepb.NewPracticeServiceClient(cc)
 	// fmt.Printf("Created client: %f", client)
 	// doUnary(client)
-	doServerStreaming(client)
+	// doServerStreaming(client)
+	doClientStreaming(client)
 }
 
 func doUnary(client practicepb.PracticeServiceClient) {
@@ -63,4 +65,58 @@ func doServerStreaming(client practicepb.PracticeServiceClient) {
 		}
 		log.Printf("Response from PracticeManyTimes: %v", msg.GetResult())
 	}
+}
+
+func doClientStreaming(client practicepb.PracticeServiceClient) {
+	fmt.Println("Starting to do a Client Streaming RPC...")
+
+	requests := []*practicepb.LongPracticeRequest{
+		&practicepb.LongPracticeRequest{
+			Practicing: &practicepb.Practicing{
+				FirstState: "Hello",
+			},
+		},
+		&practicepb.LongPracticeRequest{
+			Practicing: &practicepb.Practicing{
+				FirstState: "World",
+			},
+		},
+		&practicepb.LongPracticeRequest{
+			Practicing: &practicepb.Practicing{
+				FirstState: "hello",
+			},
+		},
+		&practicepb.LongPracticeRequest{
+			Practicing: &practicepb.Practicing{
+				FirstState: "world",
+			},
+		},
+		&practicepb.LongPracticeRequest{
+			Practicing: &practicepb.Practicing{
+				FirstState: "Hello World",
+			},
+		},
+		&practicepb.LongPracticeRequest{
+			Practicing: &practicepb.Practicing{
+				FirstState: "hello world",
+			},
+		},
+	}
+
+	stream, err := client.LongPractice(context.Background())
+	if err != nil {
+		log.Fatalf("error while calling LongPractice: %v", err)
+	}
+
+	for _, req := range requests {
+		fmt.Printf("Sending req: %v\n", req)
+		stream.Send(req)
+		time.Sleep(100 * time.Millisecond)
+	}
+
+	res, err := stream.CloseAndRecv()
+	if err != nil {
+		log.Fatalf("error while receiving response from LongPractice: %v", err)
+	}
+	fmt.Printf("LongPractice Response: %v\n", res)
 }

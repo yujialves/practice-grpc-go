@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"io"
 	"log"
 	"net"
 	"strconv"
@@ -36,6 +37,25 @@ func (*server) PracticeManyTimes(req *practicepb.PracticeManyTimesRequest, strea
 		time.Sleep(1000 * time.Millisecond)
 	}
 	return nil
+}
+
+func (*server) LongPractice(stream practicepb.PracticeService_LongPracticeServer) error {
+	fmt.Printf("LongPractice functions was invoked with a streaming request")
+	result := ""
+	for {
+		req, err := stream.Recv()
+		if err == io.EOF {
+			return stream.SendAndClose(&practicepb.LongPracticeResponse{
+				Result: result,
+			})
+		}
+		if err != nil {
+			log.Fatalf("Error while reading client stream: %v", err)
+		}
+
+		firstState := req.GetPracticing().GetFirstState()
+		result += "The state is " + firstState + "! "
+	}
 }
 
 func main() {
