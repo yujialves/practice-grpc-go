@@ -16,7 +16,18 @@ message PracticeResponse {
     string result = 1;
 }
 
+message PracticeManyTimesRequest {
+    Practicing practicing = 1;
+}
+
+message PracticeManyTimesResponse {
+    string result = 1;
+}
+
 service PracticeService{
     // Unary
     rpc Practice(PracticeRequest) returns (PracticeResponse) {};
+
+    // server Streaming
+    rpc PracticeManyTimes(PracticeManyTimesRequest) returns (stream PracticeManyTimesResponse) {};
 }
