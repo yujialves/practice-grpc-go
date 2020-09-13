@@ -1,3 +1,3 @@
 #1/bin/bash
 
-protoc ./practicepb/practice.proto --go_out=plugins=grpc:.
+protoc ./practice/practicepb/practice.proto --go_out=plugins=grpc:.
