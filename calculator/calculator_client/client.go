@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"io"
 	"log"
 
 	"../calculatorpb"
@@ -17,7 +18,8 @@ func main() {
 	defer cc.Close()
 
 	client := calculatorpb.NewCalculatorServiceClient(cc)
-	doUnary(client)
+	// doUnary(client)
+	doServerStreaming(client)
 }
 
 func doUnary(client calculatorpb.CalculatorServiceClient) {
@@ -36,4 +38,24 @@ func doUnary(client calculatorpb.CalculatorServiceClient) {
 		log.Fatalf("error while calling Sum RPC: %v", err)
 	}
 	log.Printf("Response from Sum: %d + %d = %d", firstNumber, secondNumber, res.Result)
+}
+
+func doServerStreaming(client calculatorpb.CalculatorServiceClient) {
+	req := &calculatorpb.PrimeNumberDecompositionRequest{
+		PrimeNumber: 120,
+	}
+	resStream, err := client.PrimeNumberDecomposition(context.Background(), req)
+	if err != nil {
+		log.Fatalf("error while calling PrimeNumberDecomposition RPC: %v", err)
+	}
+	for {
+		msg, err := resStream.Recv()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Fatalf("error while reading stream: %v", err)
+		}
+		log.Printf("Response from PrimeNumberDecomposition: %d", msg.GetResult())
+	}
 }
