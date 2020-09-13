@@ -13,8 +13,9 @@ import (
 type server struct{}
 
 func (*server) Practice(ctx context.Context, req *practicepb.PracticeRequest) (*practicepb.PracticeResponse, error) {
+	fmt.Printf("Practice function was invoked with %v\n", req)
 	firstState := req.GetPracticing().GetFirstState()
-	result := "The first state is" + firstState
+	result := "The first state is " + firstState
 	res := &practicepb.PracticeResponse{
 		Result: result,
 	}
