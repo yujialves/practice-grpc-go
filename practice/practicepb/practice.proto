@@ -3,4 +3,20 @@ syntax = "proto3";
 package practice;
 option go_package="practicepb";
 
-service PracticeService{}
+message Practicing {
+    string first_state = 1;
+    string second_state = 2;
+}
+
+message PracticeRequest {
+    Practicing practicing = 1;
+}
+
+message PracticeResponse {
+    string result = 1;
+}
+
+service PracticeService{
+    // Unary
+    rpc Practice(PracticeRequest) returns (PracticeResponse) {};
+}

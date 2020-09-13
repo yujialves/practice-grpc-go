@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.25.0-devel
 // 	protoc        v3.5.1
-// source: practicepb/practice.proto
+// source: practice/practicepb/practice.proto
 
 package practicepb
 
@@ -10,9 +10,12 @@ import (
 	context "context"
 	proto "github.com/golang/protobuf/proto"
 	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
+	sync "sync"
 )
 
 const (
@@ -26,47 +29,273 @@ const (
 // of the legacy proto package is being used.
 const _ = proto.ProtoPackageIsVersion4
 
-var File_practicepb_practice_proto protoreflect.FileDescriptor
+type Practicing struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
 
-var file_practicepb_practice_proto_rawDesc = []byte{
-	0x0a, 0x19, 0x70, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x70, 0x62, 0x2f, 0x70, 0x72, 0x61,
-	0x63, 0x74, 0x69, 0x63, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x08, 0x70, 0x72, 0x61,
-	0x63, 0x74, 0x69, 0x63, 0x65, 0x32, 0x11, 0x0a, 0x0f, 0x50, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63,
-	0x65, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x42, 0x0c, 0x5a, 0x0a, 0x70, 0x72, 0x61, 0x63,
-	0x74, 0x69, 0x63, 0x65, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	FirstState  string `protobuf:"bytes,1,opt,name=first_state,json=firstState,proto3" json:"first_state,omitempty"`
+	SecondState string `protobuf:"bytes,2,opt,name=second_state,json=secondState,proto3" json:"second_state,omitempty"`
 }
 
-var file_practicepb_practice_proto_goTypes = []interface{}{}
-var file_practicepb_practice_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+func (x *Practicing) Reset() {
+	*x = Practicing{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_practice_practicepb_practice_proto_msgTypes[0]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
 }
 
-func init() { file_practicepb_practice_proto_init() }
-func file_practicepb_practice_proto_init() {
-	if File_practicepb_practice_proto != nil {
+func (x *Practicing) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Practicing) ProtoMessage() {}
+
+func (x *Practicing) ProtoReflect() protoreflect.Message {
+	mi := &file_practice_practicepb_practice_proto_msgTypes[0]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Practicing.ProtoReflect.Descriptor instead.
+func (*Practicing) Descriptor() ([]byte, []int) {
+	return file_practice_practicepb_practice_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *Practicing) GetFirstState() string {
+	if x != nil {
+		return x.FirstState
+	}
+	return ""
+}
+
+func (x *Practicing) GetSecondState() string {
+	if x != nil {
+		return x.SecondState
+	}
+	return ""
+}
+
+type PracticeRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Practicing *Practicing `protobuf:"bytes,1,opt,name=practicing,proto3" json:"practicing,omitempty"`
+}
+
+func (x *PracticeRequest) Reset() {
+	*x = PracticeRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_practice_practicepb_practice_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *PracticeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PracticeRequest) ProtoMessage() {}
+
+func (x *PracticeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_practice_practicepb_practice_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PracticeRequest.ProtoReflect.Descriptor instead.
+func (*PracticeRequest) Descriptor() ([]byte, []int) {
+	return file_practice_practicepb_practice_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *PracticeRequest) GetPracticing() *Practicing {
+	if x != nil {
+		return x.Practicing
+	}
+	return nil
+}
+
+type PracticeResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Result string `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
+}
+
+func (x *PracticeResponse) Reset() {
+	*x = PracticeResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_practice_practicepb_practice_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *PracticeResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PracticeResponse) ProtoMessage() {}
+
+func (x *PracticeResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_practice_practicepb_practice_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PracticeResponse.ProtoReflect.Descriptor instead.
+func (*PracticeResponse) Descriptor() ([]byte, []int) {
+	return file_practice_practicepb_practice_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *PracticeResponse) GetResult() string {
+	if x != nil {
+		return x.Result
+	}
+	return ""
+}
+
+var File_practice_practicepb_practice_proto protoreflect.FileDescriptor
+
+var file_practice_practicepb_practice_proto_rawDesc = []byte{
+	0x0a, 0x22, 0x70, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x2f, 0x70, 0x72, 0x61, 0x63, 0x74,
+	0x69, 0x63, 0x65, 0x70, 0x62, 0x2f, 0x70, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x2e, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x12, 0x08, 0x70, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x22, 0x50,
+	0x0a, 0x0a, 0x50, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x69, 0x6e, 0x67, 0x12, 0x1f, 0x0a, 0x0b,
+	0x66, 0x69, 0x72, 0x73, 0x74, 0x5f, 0x73, 0x74, 0x61, 0x74, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0a, 0x66, 0x69, 0x72, 0x73, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x21, 0x0a,
+	0x0c, 0x73, 0x65, 0x63, 0x6f, 0x6e, 0x64, 0x5f, 0x73, 0x74, 0x61, 0x74, 0x65, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0b, 0x73, 0x65, 0x63, 0x6f, 0x6e, 0x64, 0x53, 0x74, 0x61, 0x74, 0x65,
+	0x22, 0x47, 0x0a, 0x0f, 0x50, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x12, 0x34, 0x0a, 0x0a, 0x70, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x69, 0x6e,
+	0x67, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x14, 0x2e, 0x70, 0x72, 0x61, 0x63, 0x74, 0x69,
+	0x63, 0x65, 0x2e, 0x50, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x69, 0x6e, 0x67, 0x52, 0x0a, 0x70,
+	0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x69, 0x6e, 0x67, 0x22, 0x2a, 0x0a, 0x10, 0x50, 0x72, 0x61,
+	0x63, 0x74, 0x69, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x16, 0x0a,
+	0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x72,
+	0x65, 0x73, 0x75, 0x6c, 0x74, 0x32, 0x56, 0x0a, 0x0f, 0x50, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63,
+	0x65, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x43, 0x0a, 0x08, 0x50, 0x72, 0x61, 0x63,
+	0x74, 0x69, 0x63, 0x65, 0x12, 0x19, 0x2e, 0x70, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x2e,
+	0x50, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
+	0x1a, 0x2e, 0x70, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x2e, 0x50, 0x72, 0x61, 0x63, 0x74,
+	0x69, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x0c, 0x5a,
+	0x0a, 0x70, 0x72, 0x61, 0x63, 0x74, 0x69, 0x63, 0x65, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x33,
+}
+
+var (
+	file_practice_practicepb_practice_proto_rawDescOnce sync.Once
+	file_practice_practicepb_practice_proto_rawDescData = file_practice_practicepb_practice_proto_rawDesc
+)
+
+func file_practice_practicepb_practice_proto_rawDescGZIP() []byte {
+	file_practice_practicepb_practice_proto_rawDescOnce.Do(func() {
+		file_practice_practicepb_practice_proto_rawDescData = protoimpl.X.CompressGZIP(file_practice_practicepb_practice_proto_rawDescData)
+	})
+	return file_practice_practicepb_practice_proto_rawDescData
+}
+
+var file_practice_practicepb_practice_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_practice_practicepb_practice_proto_goTypes = []interface{}{
+	(*Practicing)(nil),       // 0: practice.Practicing
+	(*PracticeRequest)(nil),  // 1: practice.PracticeRequest
+	(*PracticeResponse)(nil), // 2: practice.PracticeResponse
+}
+var file_practice_practicepb_practice_proto_depIdxs = []int32{
+	0, // 0: practice.PracticeRequest.practicing:type_name -> practice.Practicing
+	1, // 1: practice.PracticeService.Practice:input_type -> practice.PracticeRequest
+	2, // 2: practice.PracticeService.Practice:output_type -> practice.PracticeResponse
+	2, // [2:3] is the sub-list for method output_type
+	1, // [1:2] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
+}
+
+func init() { file_practice_practicepb_practice_proto_init() }
+func file_practice_practicepb_practice_proto_init() {
+	if File_practice_practicepb_practice_proto != nil {
 		return
+	}
+	if !protoimpl.UnsafeEnabled {
+		file_practice_practicepb_practice_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Practicing); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_practice_practicepb_practice_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*PracticeRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_practice_practicepb_practice_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*PracticeResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_practicepb_practice_proto_rawDesc,
+			RawDescriptor: file_practice_practicepb_practice_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   0,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_practicepb_practice_proto_goTypes,
-		DependencyIndexes: file_practicepb_practice_proto_depIdxs,
+		GoTypes:           file_practice_practicepb_practice_proto_goTypes,
+		DependencyIndexes: file_practice_practicepb_practice_proto_depIdxs,
+		MessageInfos:      file_practice_practicepb_practice_proto_msgTypes,
 	}.Build()
-	File_practicepb_practice_proto = out.File
-	file_practicepb_practice_proto_rawDesc = nil
-	file_practicepb_practice_proto_goTypes = nil
-	file_practicepb_practice_proto_depIdxs = nil
+	File_practice_practicepb_practice_proto = out.File
+	file_practice_practicepb_practice_proto_rawDesc = nil
+	file_practice_practicepb_practice_proto_goTypes = nil
+	file_practice_practicepb_practice_proto_depIdxs = nil
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -81,6 +310,8 @@ const _ = grpc.SupportPackageIsVersion6
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type PracticeServiceClient interface {
+	// Unary
+	Practice(ctx context.Context, in *PracticeRequest, opts ...grpc.CallOption) (*PracticeResponse, error)
 }
 
 type practiceServiceClient struct {
@@ -91,22 +322,60 @@ func NewPracticeServiceClient(cc grpc.ClientConnInterface) PracticeServiceClient
 	return &practiceServiceClient{cc}
 }
 
+func (c *practiceServiceClient) Practice(ctx context.Context, in *PracticeRequest, opts ...grpc.CallOption) (*PracticeResponse, error) {
+	out := new(PracticeResponse)
+	err := c.cc.Invoke(ctx, "/practice.PracticeService/Practice", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PracticeServiceServer is the server API for PracticeService service.
 type PracticeServiceServer interface {
+	// Unary
+	Practice(context.Context, *PracticeRequest) (*PracticeResponse, error)
 }
 
 // UnimplementedPracticeServiceServer can be embedded to have forward compatible implementations.
 type UnimplementedPracticeServiceServer struct {
 }
 
+func (*UnimplementedPracticeServiceServer) Practice(context.Context, *PracticeRequest) (*PracticeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Practice not implemented")
+}
+
 func RegisterPracticeServiceServer(s *grpc.Server, srv PracticeServiceServer) {
 	s.RegisterService(&_PracticeService_serviceDesc, srv)
+}
+
+func _PracticeService_Practice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PracticeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PracticeServiceServer).Practice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/practice.PracticeService/Practice",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PracticeServiceServer).Practice(ctx, req.(*PracticeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 var _PracticeService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "practice.PracticeService",
 	HandlerType: (*PracticeServiceServer)(nil),
-	Methods:     []grpc.MethodDesc{},
-	Streams:     []grpc.StreamDesc{},
-	Metadata:    "practicepb/practice.proto",
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Practice",
+			Handler:    _PracticeService_Practice_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "practice/practicepb/practice.proto",
 }
