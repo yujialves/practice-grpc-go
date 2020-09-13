@@ -58,6 +58,30 @@ func (*server) LongPractice(stream practicepb.PracticeService_LongPracticeServer
 	}
 }
 
+func (*server) PracticeBiDi(stream practicepb.PracticeService_PracticeBiDiServer) error {
+	fmt.Printf("PracticeBiDi functions was invoked with a streaming request")
+
+	for {
+		req, err := stream.Recv()
+		if err == io.EOF {
+			return nil
+		}
+		if err != nil {
+			log.Fatalf("Error while reading client stream: %v", err)
+			return err
+		}
+		firstState := req.GetPracticing().GetFirstState()
+		result := "The state is " + firstState + "\n"
+		err = stream.Send(&practicepb.PracticeBiDiResponse{
+			Result: result,
+		})
+		if err != nil {
+			log.Fatalf("Error while sending data to client stream: %v", err)
+			return err
+		}
+	}
+}
+
 func main() {
 	fmt.Println("Hello World")
 

@@ -32,6 +32,14 @@ message LongPracticeResponse {
     string result = 1;
 }
 
+message PracticeBiDiRequest {
+    Practicing practicing = 1;
+}
+
+message PracticeBiDiResponse {
+    string result = 1;
+}
+
 service PracticeService{
     // Unary
     rpc Practice(PracticeRequest) returns (PracticeResponse) {};
@@ -41,4 +49,7 @@ service PracticeService{
 
     // Client Streaming
     rpc LongPractice(stream LongPracticeRequest) returns (LongPracticeResponse) {};
+
+    // Bi Directional Streaming
+    rpc PracticeBiDi(stream PracticeBiDiRequest) returns (stream PracticeBiDiResponse) {};
 }

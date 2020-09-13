@@ -24,7 +24,8 @@ func main() {
 	// fmt.Printf("Created client: %f", client)
 	// doUnary(client)
 	// doServerStreaming(client)
-	doClientStreaming(client)
+	// doClientStreaming(client)
+	doBiDiStreaming(client)
 }
 
 func doUnary(client practicepb.PracticeServiceClient) {
@@ -119,4 +120,74 @@ func doClientStreaming(client practicepb.PracticeServiceClient) {
 		log.Fatalf("error while receiving response from LongPractice: %v", err)
 	}
 	fmt.Printf("LongPractice Response: %v\n", res)
+}
+
+func doBiDiStreaming(client practicepb.PracticeServiceClient) {
+	fmt.Println("Starting to do a BiDi Streaming RPC...")
+
+	stream, err := client.PracticeBiDi(context.Background())
+	if err != nil {
+		log.Fatalf("Error while creating stream: %v", err)
+		return
+	}
+
+	requests := []*practicepb.PracticeBiDiRequest{
+		&practicepb.PracticeBiDiRequest{
+			Practicing: &practicepb.Practicing{
+				FirstState: "Hello",
+			},
+		},
+		&practicepb.PracticeBiDiRequest{
+			Practicing: &practicepb.Practicing{
+				FirstState: "World",
+			},
+		},
+		&practicepb.PracticeBiDiRequest{
+			Practicing: &practicepb.Practicing{
+				FirstState: "hello",
+			},
+		},
+		&practicepb.PracticeBiDiRequest{
+			Practicing: &practicepb.Practicing{
+				FirstState: "world",
+			},
+		},
+		&practicepb.PracticeBiDiRequest{
+			Practicing: &practicepb.Practicing{
+				FirstState: "Hello World",
+			},
+		},
+		&practicepb.PracticeBiDiRequest{
+			Practicing: &practicepb.Practicing{
+				FirstState: "hello world",
+			},
+		},
+	}
+
+	waitc := make(chan struct{})
+
+	go func() {
+		for _, req := range requests {
+			fmt.Printf("Sending message: %v\n", req)
+			stream.Send(req)
+			time.Sleep(1000 * time.Millisecond)
+		}
+		stream.CloseSend()
+	}()
+
+	go func() {
+		for {
+			res, err := stream.Recv()
+			if err == io.EOF {
+				break
+			}
+			if err != nil {
+				log.Fatalf("Error while receiving: %v", err)
+				break
+			}
+			fmt.Printf("Received: %v\n", res.GetResult())
+		}
+	}()
+
+	<-waitc
 }
