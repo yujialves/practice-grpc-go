@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net"
@@ -10,6 +11,15 @@ import (
 )
 
 type server struct{}
+
+func (*server) Practice(ctx context.Context, req *practicepb.PracticeRequest) (*practicepb.PracticeResponse, error) {
+	firstState := req.GetPracticing().GetFirstState()
+	result := "The first state is" + firstState
+	res := &practicepb.PracticeResponse{
+		Result: result,
+	}
+	return res, nil
+}
 
 func main() {
 	fmt.Println("Hello World")
