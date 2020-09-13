@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"io"
 	"log"
 
@@ -19,7 +20,8 @@ func main() {
 
 	client := calculatorpb.NewCalculatorServiceClient(cc)
 	// doUnary(client)
-	doServerStreaming(client)
+	// doServerStreaming(client)
+	doClientStreaming(client)
 }
 
 func doUnary(client calculatorpb.CalculatorServiceClient) {
@@ -58,4 +60,39 @@ func doServerStreaming(client calculatorpb.CalculatorServiceClient) {
 		}
 		log.Printf("Response from PrimeNumberDecomposition: %d", msg.GetResult())
 	}
+}
+
+func doClientStreaming(client calculatorpb.CalculatorServiceClient) {
+	fmt.Println("Starting to do a Client Streaming RPC...")
+
+	requests := []*calculatorpb.ComputeAverageRequest{
+		&calculatorpb.ComputeAverageRequest{
+			Number: 1,
+		},
+		&calculatorpb.ComputeAverageRequest{
+			Number: 2,
+		},
+		&calculatorpb.ComputeAverageRequest{
+			Number: 3,
+		},
+		&calculatorpb.ComputeAverageRequest{
+			Number: 4,
+		},
+	}
+
+	stream, err := client.ComputeAverage(context.Background())
+	if err != nil {
+		log.Fatalf("error while calling ComputeAverage: %v", err)
+	}
+
+	for _, req := range requests {
+		fmt.Printf("Sending req: %v\n", req)
+		stream.Send(req)
+	}
+
+	res, err := stream.CloseAndRecv()
+	if err != nil {
+		log.Fatalf("error while receiving response from ComputeAverage: %v", err)
+	}
+	fmt.Printf("ComputeAverage Response: %v\n", res)
 }
