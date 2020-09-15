@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/status"
 
 	"../practicepb"
@@ -16,7 +17,20 @@ import (
 
 func main() {
 	fmt.Println("Hello World from client.")
-	cc, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
+
+	tls := false
+	opts := grpc.WithInsecure()
+	if tls {
+		certFile := ""
+		creds, sslErr := credentials.NewClientTLSFromFile(certFile, "")
+		if sslErr != nil {
+			log.Fatalf("Error while loading CA trust certificate: %v", sslErr)
+			return
+		}
+		opts = grpc.WithTransportCredentials(creds)
+	}
+
+	cc, err := grpc.Dial("localhost:50051", opts)
 	if err != nil {
 		log.Fatalf("Could not connect: %v", err)
 	}
@@ -25,12 +39,12 @@ func main() {
 
 	client := practicepb.NewPracticeServiceClient(cc)
 	// fmt.Printf("Created client: %f", client)
-	// doUnary(client)
+	doUnary(client)
 	// doServerStreaming(client)
 	// doClientStreaming(client)
 	// doBiDiStreaming(client)
-	doUnaryWithDeadline(client, 5*time.Second)
-	doUnaryWithDeadline(client, 1*time.Second)
+	// doUnaryWithDeadline(client, 5*time.Second)
+	// doUnaryWithDeadline(client, 1*time.Second)
 }
 
 func doUnary(client practicepb.PracticeServiceClient) {
