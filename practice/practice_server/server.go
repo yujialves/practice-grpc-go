@@ -9,6 +9,9 @@ import (
 	"strconv"
 	"time"
 
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
+
 	"../practicepb"
 	"google.golang.org/grpc"
 )
@@ -80,6 +83,23 @@ func (*server) PracticeBiDi(stream practicepb.PracticeService_PracticeBiDiServer
 			return err
 		}
 	}
+}
+
+func (*server) PracticeWithDeadline(ctx context.Context, req *practicepb.PracticeWithDeadlineRequest) (*practicepb.PracticeWithDeadlineResponse, error) {
+	fmt.Printf("PracticeWithDeadline function was invoked with %v\n", req)
+	for i := 0; i < 3; i++ {
+		if ctx.Err() == context.Canceled {
+			fmt.Println("The client canceled the request!")
+			return nil, status.Error(codes.Canceled, "The client canceled the request")
+		}
+		time.Sleep(1 * time.Second)
+	}
+	firstState := req.GetPracticing().GetFirstState()
+	result := "The first state is " + firstState
+	res := &practicepb.PracticeWithDeadlineResponse{
+		Result: result,
+	}
+	return res, nil
 }
 
 func main() {

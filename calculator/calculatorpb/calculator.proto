@@ -57,6 +57,6 @@ service CalculatorService{
     rpc ComputeAverage(stream ComputeAverageRequest) returns (ComputeAverageResponse) {};
     // Bi Directional Streaming
     rpc FindMaximum(stream FindMaximumRequest) returns (stream FindMaximumResponse) {};
-
+    // Error Handling
     rpc SquareRoot(SquareRootRequest) returns (SquareRootResponse) {};
 }

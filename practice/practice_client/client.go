@@ -7,6 +7,9 @@ import (
 	"log"
 	"time"
 
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
+
 	"../practicepb"
 	"google.golang.org/grpc"
 )
@@ -25,7 +28,9 @@ func main() {
 	// doUnary(client)
 	// doServerStreaming(client)
 	// doClientStreaming(client)
-	doBiDiStreaming(client)
+	// doBiDiStreaming(client)
+	doUnaryWithDeadline(client, 5*time.Second)
+	doUnaryWithDeadline(client, 1*time.Second)
 }
 
 func doUnary(client practicepb.PracticeServiceClient) {
@@ -190,4 +195,31 @@ func doBiDiStreaming(client practicepb.PracticeServiceClient) {
 	}()
 
 	<-waitc
+}
+
+func doUnaryWithDeadline(client practicepb.PracticeServiceClient, timeout time.Duration) {
+	fmt.Println("Starting to do a UnaryWithDeadline RPC...")
+	req := &practicepb.PracticeWithDeadlineRequest{
+		Practicing: &practicepb.Practicing{
+			FirstState:  "Hello",
+			SecondState: "World",
+		},
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), timeout*time.Second)
+	defer cancel()
+	res, err := client.PracticeWithDeadline(ctx, req)
+	if err != nil {
+		statusErr, ok := status.FromError(err)
+		if ok {
+			if statusErr.Code() == codes.DeadlineExceeded {
+				fmt.Println("Timeout was hit! Deadline was exceeded")
+			} else {
+				fmt.Printf("unexpected error: %v", statusErr)
+			}
+		} else {
+			log.Fatalf("error while calling Practice RPC: %v", err)
+		}
+		return
+	}
+	log.Printf("Response from Practice: %v", res.Result)
 }

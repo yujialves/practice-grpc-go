@@ -40,6 +40,14 @@ message PracticeBiDiResponse {
     string result = 1;
 }
 
+message PracticeWithDeadlineRequest {
+    Practicing practicing = 1;
+}
+
+message PracticeWithDeadlineResponse {
+    string result = 1;
+}
+
 service PracticeService{
     // Unary
     rpc Practice(PracticeRequest) returns (PracticeResponse) {};
@@ -52,4 +60,7 @@ service PracticeService{
 
     // Bi Directional Streaming
     rpc PracticeBiDi(stream PracticeBiDiRequest) returns (stream PracticeBiDiResponse) {};
+
+    // Unary with deadline
+    rpc PracticeWithDeadline(PracticeWithDeadlineRequest) returns (PracticeWithDeadlineResponse) {};
 }
