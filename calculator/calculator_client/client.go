@@ -6,6 +6,9 @@ import (
 	"io"
 	"log"
 
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
+
 	"../calculatorpb"
 	"google.golang.org/grpc"
 )
@@ -22,7 +25,8 @@ func main() {
 	// doUnary(client)
 	// doServerStreaming(client)
 	// doClientStreaming(client)
-	doBiDiStreaming(client)
+	// doBiDiStreaming(client)
+	doErrorUnary(client)
 }
 
 func doUnary(client calculatorpb.CalculatorServiceClient) {
@@ -153,4 +157,29 @@ func doBiDiStreaming(client calculatorpb.CalculatorServiceClient) {
 	}()
 
 	<-waitc
+}
+
+func doErrorUnary(client calculatorpb.CalculatorServiceClient) {
+	fmt.Println("Starting to do a SquareRoot Unary RPC...")
+	doErrorCall(client, 10)
+	doErrorCall(client, -2)
+}
+
+func doErrorCall(client calculatorpb.CalculatorServiceClient, n int64) {
+	res, err := client.SquareRoot(context.Background(), &calculatorpb.SquareRootRequest{Number: n})
+	if err != nil {
+		respErr, ok := status.FromError(err)
+		if ok {
+			fmt.Printf("Error message from server: %v\n", respErr.Message())
+			fmt.Println(respErr.Code())
+			if respErr.Code() == codes.InvalidArgument {
+				fmt.Println("We prabably sent a negative number!")
+				return
+			}
+		} else {
+			log.Fatalf("Big error calling SquareRoot: %v", err)
+			return
+		}
+	}
+	fmt.Printf("Result of square root of %v: %v\n", n, res.GetNumberRoot())
 }
